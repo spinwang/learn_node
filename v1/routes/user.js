@@ -7,7 +7,7 @@ var Device = mongoose.model('Device');
 
 // router
 router.param('user_id', function(req,res,next,user_id){
-    var query = Device.findById(user_id);
+    var query = User.findById(user_id);
     query.exec(function (err, user){
 
         if (err) {return next(err);}
@@ -24,8 +24,16 @@ module.exports.index = function (req,res) {
 
 };
 
-module.exports.create = function (req,res) {
-
+module.exports.create = function (req,res,next) {
+    var user = req.body;
+    User.findOne({email:user.email},function(err,user){
+        if (err) {return next(err);}
+        if (user) {
+            res.send( { warning:'Email already exists.' });
+        } else User.create(user, function (err, newUser) {
+            res.send(newUser);
+        });
+    });
 
 };
 
@@ -34,5 +42,11 @@ module.exports.show = function (req,res) {
 };
 
 module.exports.update = function (req,res) {
+
+};
+
+module.exports.showDevices = function (req,res) {
+    var email = req.user;
+    res.send();
 
 };

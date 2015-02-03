@@ -45,15 +45,14 @@ var authorize = function(req,res,next){
     res.send(401);
 };*/
 
-// models
+// models (register the schemas for the various models)
 require('./models/Device.js');
 require('./models/User.js');
+require('./models/Adaptor.js');
+require('./models/Driver.js');
 
 // routes
 routes = require('./routes');
-
-
-
 
 // API device
 app.get('/devices',routes.device.index);
@@ -66,6 +65,12 @@ app.get('/users',routes.user.index);
 app.post('/users',routes.user.create);
 app.get('/users/:user_id',routes.user.show);
 app.put('/users/:user_id',routes.user.update);
+app.get('/users/:user_id/devices',routes.user.showDevices);
+
+// API adaptor
+app.get('/drivers/:driver_id',routes.driver.show);
+
+
 
 
 // catch 404 and forward to error handler
@@ -100,4 +105,6 @@ app.use(function(err, req, res, next) {
 });
 
 
+
 module.exports = app;
+
