@@ -24,7 +24,7 @@ module.exports.index = function (req,res) {
 
 };
 
-module.exports.create = function (req,res,next) {
+module.exports.creates = function (req,res,next) {
     var user = req.body;
     User.findOne({email:user.email},function(err,user){
         if (err) {return next(err);}

@@ -62,15 +62,20 @@ app.put('/devices/:device_id',routes.device.update);
 
 // API user
 app.get('/users',routes.user.index);
-app.post('/users',routes.user.create);
+app.post('/users',routes.user.creates);
 app.get('/users/:user_id',routes.user.show);
 app.put('/users/:user_id',routes.user.update);
 app.get('/users/:user_id/devices',routes.user.showDevices);
 
-// API adaptor
+// API driver
+app.param('driver_id',routes.driver.param);
+app.get('/drivers',routes.driver.index);
 app.get('/drivers/:driver_id',routes.driver.show);
 
-
+// Webpage
+app.get('/',function(req,res){
+    res.sendfile(__dirname + '/views/index.html');
+})
 
 
 // catch 404 and forward to error handler

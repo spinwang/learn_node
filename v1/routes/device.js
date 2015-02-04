@@ -20,11 +20,12 @@ router.param('device_id', function(req,res,next,device_id){
 module.exports.router = router;
 
 module.exports.index = function (req,res) {
-
+    Device.find({},function(err,results){
+        res.send(results);
+    });
 };
 
 module.exports.creates = function (req,res) {
-    console.log("here");
     Device.create(req.body,function(err,newDevice){
         res.send(newDevice);
     })

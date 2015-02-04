@@ -28,7 +28,7 @@ describe('TS CLOUD SERVER',function(){
     };
 
     var seedDriver = {
-        model : 'MassBalancer',
+        driverId : 'MassBalancer',
         io: {
             port:'/dev/tty0',
             standard:'RS232'
@@ -37,7 +37,19 @@ describe('TS CLOUD SERVER',function(){
             type:'button',
             name:'Single Acquisition',
             css_class:'btn',
-            id : 'singleAcquisiition',
+            id : 'singleAcquisition',
+            position: ''
+        },{
+            type:'input',
+            name:'Interval(sec)',
+            css_class:'input',
+            id : 'interval',
+            position: ''
+        },{
+            type:'button',
+            name:'Multiple Acquisition',
+            css_class:'btn',
+            id : 'multipleAcquisition',
             position: ''
         }],
         commands : [{

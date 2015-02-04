@@ -6,7 +6,7 @@ var DriverSchema;
 
 DriverSchema = new mongoose.Schema({
 
-    model: String,
+    driverId: String,
     io: mongoose.Schema.Types.Mixed,
     ui: [{
         type: String, // btn, display or input
