@@ -1,0 +1,16 @@
+{
+  "name": "stream",
+  "version": "0.0.0",
+  "description": "nodejs stream class",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node"
+  },
+  "author": "spin wang",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "cheerio": "~0.18.0",
+    "express": "~4.11.1"
+  }
+}
