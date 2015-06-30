@@ -7,7 +7,7 @@ Function.prototype.partial = function(){
     var func = this;
     var argList = Array.prototype.slice.call(arguments);
     return function(){
-        return func.apply(this,argList);
+        return func.apply(this, argList);
     }
 }
 

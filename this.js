@@ -3,20 +3,46 @@ function Request() {
   this.redirects = 0;
 };
 
+
 Request.prototype.get = function(){
-  console.log(this);
+  console.log(this.hey);
   function temp_bind() {
-    console.log(this);
-  };
-  function temp_nobind() {
     console.log(this);
   };
   temp_bind.bind(this);
   console.log('temp bind');
-  temp_bind();
-  console.log('temp nobind');
-  temp_nobind();
 }
+
+global.hey = 10;
+var my2String = {
+  hey : 1,
+  newMethod : function(){
+    console.log(this.hey);
+  }
+}
+var unsolictedCallback = my2String.newMethod.bind(global);
+unsolictedCallback();
 
 request = new Request();
 request.get();
+
+var test = {
+  prop : 10 ,
+  addPropTo : function ( array ) {
+    return array.map ( function ( elt ) {
+      console.log(this);
+      return this.prop + elt ;
+    }. bind ( this ) ) ;
+  }
+};
+var test1 = {
+  prop : 10 ,
+  addPropTo : function ( array ) {
+    return array.map ( function ( elt ) {
+      //console.log(this);
+      return elt ;
+    } ) ;
+  }
+};
+console.log( test.addPropTo ([5]) ) ;
+console.log( test1.addPropTo ([5]) ) ;
