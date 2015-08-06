@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<video></video>
+</body>
+
+<script>
+    // Setup the WebSocket connection and start the player
+    var client = new WebSocket( 'ws://localhost:8084/' );
+    var canvas = document.getElementById('videoCanvas');
+    var player = new jsmpeg(client, {canvas:canvas});
+</script>
+</html>

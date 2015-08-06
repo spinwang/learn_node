@@ -47,3 +47,12 @@ var thing = new Thing('whatsit')
 thing.delayedName(function(name){
     console.log("clicked", name.toUpperCase())
 })
+
+var a = '3';
+
+function hey() {
+    var a = '2';
+    console.log(a);
+}
+
+hey();
