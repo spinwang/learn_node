@@ -46,3 +46,21 @@ var test1 = {
 };
 console.log( test.addPropTo ([5]) ) ;
 console.log( test1.addPropTo ([5]) ) ;
+
+var testObj  = {hey:'e'};
+var testFunc = function(){};
+
+var dog = 9;
+testFunc.prototype.miao = function(key){
+  var self = this;
+  self[key] = 'miaomiao';
+  console.log(self.dog);
+};
+
+//testFunc.prototype.miao = function(){console.log(1)};
+//testObj.prototype.miao = 1;
+atestFunc = new testFunc();
+atestFunc.miao('cat');
+console.log(testObj.miao);
+console.log(atestFunc);
+
