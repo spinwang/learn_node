@@ -17,7 +17,7 @@ if (ocean) {
 }
 
 var interface = ocean.interfaces[0]; // there is usually only 1 interface
-interface.claim();      //
+interface.claim();      // need to claim the interface before use any of the interface's endpoint
 var endPoints = interface.endpoints;
 
 
@@ -27,6 +27,8 @@ var ep_command = findEndPointByAddress(endPoints,ep1out);
 var ep_result_spectrum = findEndPointByAddress(endPoints,ep2in);
 // all other result comes from endpoint 1 In
 var ep_result = findEndPointByAddress(endPoints,ep1in);
+
+// start the polling
 ep_result.startPoll();
 ep_result.on('data',function(buf){
     console.log(buf.toString());
@@ -36,27 +38,29 @@ var counter = 0;
 var spectrum = [];
 ep_result_spectrum.on('data',function(buf){
     counter ++;
-    if (counter ===9) {
+
+    if (counter ===9) { // 9 packet is sent out, this the last one
         console.log(buf);
-    }; // 9 packet is sent out, this the last one.
-    var data = processSpectrum(buf);
-    if (counter ===4) {
-        console.log(data[240]);
+    } else {
+        var data = processSpectrum(buf);
+        console.log(data);
+        console.log('data length', data.length);
+        spectrum = spectrum.concat(data);
     };
-    console.log('data length', data.length);
-    spectrum = spectrum.concat(data);
-    console.log('data');
-    //console.log(buf.toString())
+
 });
 
 
-
+// assemble the commands to send
 var getSerialNum = createCmd(2,[0x05,0x00]);
 var getSpectrum  = createCmd(1,[0x09]);
 var cmd = new Buffer(2);
 
 ep_command.transfer(getSerialNum,transferCB);
-ep_command.transfer(getSpectrum,transferCB);//ocean.close();
+ep_command.transfer(getSpectrum,transferCB);
+
+// need to properly close the usb device
+//ocean.close();
 
 
 function findEndPointByAddress(endPoints,address){
@@ -67,7 +71,7 @@ function findEndPointByAddress(endPoints,address){
 
 function createCmd(size,bytes){
     var buf = new Buffer(size);
-    buf.fill(0);
+    console.log('buffer length', buf.fill(0));
     while (bytes.length > 0) {
         buf.writeUInt8(bytes.pop(),bytes.length);
     }
@@ -77,15 +81,17 @@ function createCmd(size,bytes){
 
 function transferCB(err){
     if (err) {
-        console.error('command transfer failed')
+        console.error('command transfer failed');
         console.error(err);
     }
 };
 
 function processSpectrum(buf){
     var spectrum =[];
-    for (var i = 1; i<buf.length; i = i+2){ // get the MSB bit
-        spectrum.push(parseInt(buf[i]))
+    var i;
+    for (i = 0; i<buf.length; i = i+2){
+        var decimal_val = buf.readUIntLE(i,2); // the order is LSB and then MSB
+        spectrum.push(decimal_val);
     }
     return spectrum;
 }
