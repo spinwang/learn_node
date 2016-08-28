@@ -8,7 +8,7 @@ for (var i= 0;  i <5; i++){
         console.log(arg);
     };
 
-    setTimeout(func.bind(null,i),1000);
+    setTimeout(func.bind(null,i),(i+1)*1000);
 }
 
 function print(i) {
@@ -27,7 +27,7 @@ for (var i= 0;  i <5; i++){
 
     var hey = function(x) {
         setTimeout(print(x),1000)
-    }
+    };
 
     hey(i);
 }

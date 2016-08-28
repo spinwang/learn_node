@@ -64,3 +64,18 @@ atestFunc.miao('cat');
 console.log(testObj.miao);
 console.log(atestFunc);
 
+var obj = {};
+global.color = 'global_color';
+obj.color = 'red';
+obj.paint = function(){
+  console.log(this.color);
+}
+obj.paint();
+var findNodes = function(callback){
+  if (typeof callback === 'function'){
+    callback();
+  }
+};
+
+findNodes(obj.paint);
+
